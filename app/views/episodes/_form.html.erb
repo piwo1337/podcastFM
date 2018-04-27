@@ -1,0 +1,7 @@
+<%= bootstrap_form_for([@podcast, @episode]) do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <%= f.file_field :episode_thumbnail %>
+  <%= f.file_field :mp3 %>
+  <%= f.submit class: 'btn btn-newbtn'  %>
+<% end %>

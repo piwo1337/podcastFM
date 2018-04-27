@@ -1,0 +1,110 @@
+<div id="podcast_show">
+
+  <div id="show_banner">
+    <div class="wrapper">
+      <h1><%= @podcast.title %></h1>
+      <p class="description"><%= @podcast.description %></p>
+
+      <% unless @podcast.itunes.blank? %>
+        <%= link_to("iTunes", "http://#{@podcast.itunes}", class: 'subscribe_link') %>
+      <% end %>
+      <% unless @podcast.stitcher.blank? %>
+        <%= link_to("Stitcher", "http://#{@podcast.itunes}", class: 'subscribe_link') %>
+      <% end %>
+      <% unless @podcast.podbay.blank? %>
+        <%= link_to("Podbay", "http://#{@podcast.itunes}", class: 'subscribe_link') %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div id="breadcrumb">
+    <%= link_to podcasts_path do %>
+      All Podcasts
+      <span>/</span>
+      <%= link_to(@podcast.title, podcast_path(@podcast)) %>
+      <span>/</span>
+      <%= @episode.title %>
+    <% end %>
+  </div>
+
+  <div id="episode_content">
+    <div class="wrapper_skinny">
+        <%= image_tag @episode.episode_thumbnail.url(:medium),
+                      class: 'current_episode_thumbnail'  %>
+      <h2><%= @episode.title %></h2>
+      <p class="description"><%= @episode.description %></p>
+
+      <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+      <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+        <div class="jp-type-single">
+          <div class="jp-gui jp-interface">
+            <div class="jp-controls">
+              <button class="jp-play" role="button" tabindex="0">play</button>
+              <button class="jp-stop" role="button" tabindex="0">stop</button>
+            </div>
+            <div class="jp-progress">
+              <div class="jp-seek-bar">
+                <div class="jp-play-bar"></div>
+              </div>
+            </div>
+            <div class="jp-volume-controls">
+              <button class="jp-mute" role="button" tabindex="0">mute</button>
+              <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+              <div class="jp-volume-bar">
+                <div class="jp-volume-bar-value"></div>
+              </div>
+            </div>
+            <div class="jp-time-holder">
+              <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+              <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+            </div>
+          </div>
+          <div class="jp-no-solution">
+            <span>Update Required</span>
+            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="episodes">
+    <div class="wrapper_skinny">
+      <ul class="cf">
+       <% @episodes.each do |episode| %>
+          <li class="cf">
+              <%= link_to '#' do %>
+                <%= image_tag episode.episode_thumbnail.url(:medium),
+                                           class: 'episode_thumbnail' %>
+            <div class="episode_overview">
+              <h2>
+                <%= link_to episode.title, podcast_episode_path(@podcast, episode),
+                                           class: 'episode_description' %>
+              </h2>
+              <% end %>
+              <p class="description"><%= truncate(episode.description, length:100) %>
+              </p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#jquery_jplayer_1").jPlayer({
+    ready: function (event) {
+      $(this).jPlayer("setMedia", {
+        mp3: "<%= @episode.mp3.url %>"
+      });
+    },
+    swfPath: "/js",
+    supplied: "mp3"
+  });
+});
+</script>

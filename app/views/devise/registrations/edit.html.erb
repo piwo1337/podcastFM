@@ -1,0 +1,87 @@
+<div id="podcast_show">
+
+  <div id="show_banner">
+    <div class="wrapper">
+      <h1>Edit <%= @podcast.title %></h1>
+    </div>
+  </div>
+
+  <div id="links">
+    <div class="wrapper_skinny">
+      <ul>
+        <li><%= link_to("Episodes", root_url) %></li>
+        <li><%= link_to("New Episode", new_podcast_episode_path(@podcast)) %></li>
+        <li><%= link_to("Account Settings", edit_podcast_registration_path, class: 'current' ) %></li>
+        <li><%= link_to("View Podcast", podcast_path(current_podcast)) %></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%= devise_error_messages! %>
+
+<div id="form">
+  <div class="col-md-6 offset-3">
+
+    <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+
+      <div class="field">
+        <%= f.text_field :title, autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%= f.text_area :description %>
+      </div>
+
+      <div class="field">
+        <%= f.file_field :thumbnail %>
+      </div>
+
+      <div class="field">
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="field">
+        <%= f.text_field :itunes %>
+      </div>
+
+      <div class="field">
+        <%= f.text_field :stitcher %>
+      </div>
+
+      <div class="field">
+        <%= f.text_field :podbay %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password_confirmation, autocomplete: "off", label: 'Confirm Password' %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :current_password, autocomplete: "off" %>
+        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update", class: 'btn btn-newbtn' %>
+      </div>
+    <% end %>
+
+    <div class="cancel">
+
+    <h6>Unhappy?</h6>
+
+    <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: 'btn btn-sm btn-newbtn' %>
+
+  </div>
+
+  </div>
+</div>

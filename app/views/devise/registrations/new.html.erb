@@ -1,0 +1,39 @@
+<div id="banner">
+  <h1>Create New Podcast. 100% Free!</h1>
+</div>
+
+<%= devise_error_messages! %>
+
+<div id="form">
+  <div class="col-md-6 offset-3">
+
+    <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+      <div class="field">
+        <%= f.text_field :title, autofocus: true, autocomplete: "title" %>
+      </div>
+
+      <div class="field">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.file_field :thumbnail %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.password_field :password_confirmation, label: 'Confirm Password', autocomplete: "off" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up", class: 'btn btn-newbtn' %>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
